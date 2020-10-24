@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "851436308511",
+    "firebase_url": "https://suppliersadda.firebaseio.com",
+    "project_id": "suppliersadda",
+    "storage_bucket": "suppliersadda.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:851436308511:android:8a5c87fd78b457e1a96d2a",
+        "android_client_info": {
+          "package_name": "com.example.suppliersadda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "851436308511-ql06a7e3l20nje2d9kdof26thqgqc9j7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5S-YTDd3iURL5wEHqkyNw_PuWVW8Eu7E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "851436308511-ql06a7e3l20nje2d9kdof26thqgqc9j7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
