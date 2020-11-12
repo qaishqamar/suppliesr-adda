@@ -1,7 +1,9 @@
 package com.example.suppliersadda
 
 import android.Manifest
+import android.R.attr
 import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -12,16 +14,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import com.example.suppliersadda.R.id.ChipsRadioButton
+import com.example.suppliersadda.R.id.pin
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.fragment_shell.*
+import kotlinx.android.synthetic.main.fragment_shell.view.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 
-// TODO: Rename parameter arguments, choose names that match
+// TODO: Rena
+//  me parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 //private const val ARG_PARAM1 = "param1"
 //private const val ARG_PARAM2 = "param2"
@@ -44,11 +53,18 @@ class ShellFragment : Fragment() {
     var selected_photo1_uri: Uri? = null
     var selected_photo2_uri: Uri? = null
     var selected_photo3_uri: Uri? = null
-
+    var pikedImageCode=0
+    lateinit var materialRadioBtn:RadioGroup
+    var selectedmaterial:String?=null
+    lateinit var pinShell:EditText
+//    lateinit var chipsRadioButton: RadioButton
+//    lateinit var humanRadioButton:RadioButton
+//    lateinit var rawRadioButton: RadioButton
 
     lateinit var mContext: Context
     lateinit var mAuth: FirebaseAuth
-
+    var imagesUriList:ArrayList<Uri>?=null
+    var imagesUrlList:ArrayList<String>?=null
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mContext=context
@@ -58,8 +74,8 @@ class ShellFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-
-
+        imagesUriList=ArrayList()
+        imagesUrlList=ArrayList()
         return inflater.inflate(R.layout.fragment_shell, container, false)
     }
 
@@ -77,16 +93,21 @@ class ShellFragment : Fragment() {
         pic1Img = view!!.findViewById(R.id.select_circleImageView1_register)
         pic2Img = view!!.findViewById(R.id.select_circleImageView2_register)
         pic3Img = view!!.findViewById(R.id.select_circleImageView3_register)
-
+        vehicle=view!!.findViewById(R.id.vehicleShelEt)
+        materialRadioBtn=view!!.findViewById(R.id.radioGroup)
+        pinShell=view!!.findViewById(R.id.pinCodeID)
 
 
         val arrayAdapter =
-            ArrayAdapter(activity!!, android.R.layout.simple_list_item_1, Registration.localitiesArray)
+            ArrayAdapter(activity!!,
+                android.R.layout.simple_list_item_1,
+                Registration.localitiesArray)
         localityId.setAdapter(arrayAdapter)
-        val permissionGet=PermissionGet(context!!,activity!!)
+        val permissionGet=PermissionGet(context!!, activity!!)
 
         DealerResisterbtn.setOnClickListener {
             Toast.makeText(context, "button clicked", Toast.LENGTH_SHORT).show()
+            uploadImagrToFirebase()
 
         }
         pic1Btn.setOnClickListener {
@@ -94,6 +115,7 @@ class ShellFragment : Fragment() {
             val permissionName=Manifest.permission.READ_EXTERNAL_STORAGE
             if (permissionGet.checkperrmission(permissionName)){
                 Log.e("DB", "PERMISSION GRANTED")
+
                 PickImage(1)
             }
 
@@ -104,6 +126,7 @@ class ShellFragment : Fragment() {
           if (permissionGet.checkperrmission(permissionName)){
               Log.e("DB", "PERMISSION GRANTED")
               PickImage(2)
+
           }
         }
         pic3Btn.setOnClickListener {
@@ -111,91 +134,166 @@ class ShellFragment : Fragment() {
             if (permissionGet.checkperrmission(permissionName)){
                 Log.e("DB", "PERMISSION GRANTED")
                 PickImage(3)
+
             }
         }
        DealerResisterbtn.setOnClickListener {
-           if (vehicle.text.toString()!=null&&localityAutoCompleteTextView.text.toString()!=null&&pinCodeID.text.toString()!=null&&cityAdresEtShel.text.toString()!=null){
-
+           if (vehicle.text.toString()!=null&&localityAutoCompleteTextView.text.toString()!=null&&pinCodeID.text.toString()!=null&&cityAdresEtShel.text.toString()!=null&&selectedmaterial!=null ){
+                uploadImagrToFirebase()
            }
        }
+        materialRadioBtn.setOnCheckedChangeListener { compoundButton, b ->
+            when(b){
+                R.id.ChipsRadioButton->{selectedmaterial="Chips"
+
+                }
+                R.id.RawMaterialRadioButton->{
+                    selectedmaterial="Rawmaterial"
+                }
+                R.id.humanRadioButton->{
+                    selectedmaterial="Human"
+                }
+
+            }
+        }
 
     }
      fun PickImage(code: Int){
          Log.d("Main", "Try to show photo selecter")
-         val intent = Intent(Intent.ACTION_PICK)
-         intent.type = "image/*"
-         startActivityForResult(intent, code)
+         getContext()?.let {
+             CropImage.activity()
+                 .start(it, this)
+         };
+         pikedImageCode=code
      }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.d("Main", "overrde activity result strat")
+        if (requestCode==CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            //proceed and check what thee image is selected
+            Log.d("Main", "image is selected")
+
+            val result = CropImage.getActivityResult(data)
+            if (resultCode==RESULT_OK){
+
+                when (pikedImageCode) {
+                    1 -> {
+                        Log.d("Main", "image is selected")
+                        pic1Img.setImageURI(result.uri)
+                        selected_photo1_uri = result.uri
+                        imagesUriList?.add(selected_photo1_uri!!)
+                        pic1Img.setImageURI(selected_photo1_uri)
+                        pic1Btn.alpha = 0f
+
+                    }
+                    2 -> {
+                        Log.d("Main", "image is selected")
+                        selected_photo2_uri = result.uri
+                        imagesUriList?.add(selected_photo2_uri!!)
+                        pic2Img.setImageURI(selected_photo2_uri)
+                        pic2Btn.alpha = 0f
+                    }
+                    3 -> {
+                        Log.d("Main", "image is selected")
+                        selected_photo3_uri = result.uri
+                        imagesUriList?.add(selected_photo3_uri!!)
+                        pic3Img.setImageURI(selected_photo3_uri)
+                        pic3Btn.alpha = 0f
+                    }
+
+                }
+            }
+            else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                val error = result.error
+                Log.d("Main", "$error")
+            }
+
+        }
+        else
+        {
+            Log.d("Main", "conditioon false")
+        }
+    }
 /*
 for permission override
 */
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
+    requestCode: Int,
+    permissions: Array<out String>,
+    grantResults: IntArray,
+) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             Registration.PermissionCode -> {
                 if (grantResults.size >= 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 //                        Toast.makeText(this,"permission granted",Toast.LENGTH_SHORT).show()
-                    Registration.permissionGrant =true
+                    Registration.permissionGrant = true
                     Log.d("phone no", "Contact no:- trying to reed contacts")
-                }
-                else {
-                    Registration.permissionGrant =false
-                    Toast.makeText(context,"Permission denied in fragment ",Toast.LENGTH_SHORT).show()
+                } else {
+                    Registration.permissionGrant = false
+                    Toast.makeText(context, "Permission denied in fragment ", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
 
         }
     }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode> 0&&requestCode<=3 && resultCode == Activity.RESULT_OK && data != null) {
-            //proceed and check what thee image is selected
-            Log.d("Main", "image is selected")
 
-            when (requestCode) {
-                1 -> {
-                    selected_photo1_uri = data.data
-                    pic1Img.setImageURI(selected_photo1_uri)
-                    pic1Btn.alpha = 0f
-                }
-                2 -> {
-                    selected_photo2_uri = data.data
-                    pic2Img.setImageURI(selected_photo2_uri)
-                    pic2Btn.alpha = 0f
-                }
-                3 -> {
-                    selected_photo3_uri = data.data
-                    pic3Img.setImageURI(selected_photo3_uri)
-                    pic3Btn.alpha = 0f
-                }
 
+    private fun uploadImagrToFirebase() {
+
+        for (uri in imagesUriList!!){
+            val filename = UUID.randomUUID().toString()
+            val ref = FirebaseStorage.getInstance().getReference("/DealersImages/$filename")
+            Log.d("Images url", "$uri")
+            ref.putFile(uri).addOnSuccessListener {
+                Log.d("Images url", "${it}")
+                imagesUrlList!!.add(it.toString())
+                if (imagesUriList!!.size== imagesUrlList!!.size&&imagesUrlList!!.isNotEmpty()){
+                    Toast.makeText(context,"images are uploded successfully",Toast.LENGTH_SHORT).show()
+                    saveDealersDataFb()
+                }
             }
+                .addOnFailureListener{
+                    Log.d("Images url", "${it}+ failed to upload")
+                }
 
         }
 
 
     }
-//    private fun uploadImagrToFirebase(){
-//        val filename= UUID.randomUUID().toString()
-//        val ref= FirebaseStorage.getInstance().getReference("/image/$filename")
-//        ref.putFile(selected_photo_uri!!)
-//            .addOnSuccessListener {
-//                Log.d("Main","image is uploaded sucessfully ${it.metadata?.path}")
-//                ref.downloadUrl.addOnSuccessListener {
-//                    Log.d("Main","File location :$it")
-//
-//                    saveUserToFirebase(it.toString())
-//                }
-//            }
-//            .addOnFailureListener{
-//                Toast.makeText(this,"Image url is saving Failed",Toast.LENGTH_SHORT).show()
-//            }
+
+    private fun saveDealersDataFb() {
+        val uid=FirebaseAuth.getInstance().uid?:""
+        val picPath1:String=imagesUrlList!!.get(0)
+        val picPath2:String=imagesUrlList!!.get(1)
+        val picPath3:String=imagesUrlList!!.get(2)
+        Log.d("UrlList1"," ${imagesUrlList!!.get(0)}")
+        Log.d("UrlList2"," ${imagesUrlList!![1]}")
+        Log.d("UrlList1"," ${imagesUrlList!!.get(2)}")
+       val dealersDataModel=DealersDataModel(vehicle.text.toString(),selectedmaterial!!,localityAutoCompleteTextView.text.toString(),pinShell.text.toString(),cityAdresEtShel.text.toString(),uid,
+           picPath1,
+           picPath2,
+           picPath3
+       )
+        val ref= FirebaseDatabase.getInstance().getReference("/DealersData/$uid")
+
+        ref.setValue(dealersDataModel)
+            .addOnSuccessListener {
+                Log.d("Main","user detail is uploaded")
+              Toast.makeText(context,"Dealers data saved succesfully",Toast.LENGTH_SHORT).show()
+            }
+
+            .addOnFailureListener {
+                Log.d("Main","details re not uploaded :try again")
+                Toast.makeText(context,"dealers details not uploaded",Toast.LENGTH_SHORT).show()
+
+            }
+    }
 
 
 }
+
+
 
 

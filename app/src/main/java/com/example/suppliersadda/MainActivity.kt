@@ -1,8 +1,11 @@
 package com.example.suppliersadda
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -11,6 +14,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var homeFragment:HomeFragment
     lateinit var shellFragment: ShellFragment
     lateinit var profileFragment: ProfileFragment
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
