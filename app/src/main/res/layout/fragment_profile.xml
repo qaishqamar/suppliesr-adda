@@ -1,17 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ProfileFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="profile fragment"
-        android:textSize="38sp"
-        android:layout_gravity="center"
-        />
+        android:layout_height="match_parent"
+        >
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/profilePicProfile"
+            android:layout_width="match_parent"
+            android:layout_margin="25dp"
+            android:layout_height="196dp"
+            android:src="@drawable/add_pic_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/namelinearContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            app:layout_constraintEnd_toEndOf="@+id/profilePicProfile"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/profilePicProfile"
+            app:layout_constraintTop_toBottomOf="@+id/profilePicProfile">
+
+            <TextView
+                android:id="@+id/userNameTvProfile"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:text="User Name"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/userNameDynamicTvProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="Qamar Anwar" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/phonNolinearContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            app:layout_constraintEnd_toEndOf="@+id/namelinearContainer"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/namelinearContainer"
+            app:layout_constraintTop_toBottomOf="@+id/namelinearContainer">
+
+            <TextView
+                android:id="@+id/PhoneNoTvProfile"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:text="Phone No"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/PhonNoDynamicTvProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="6200931748" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/EmaillinearContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            app:layout_constraintEnd_toEndOf="@+id/phonNolinearContainer"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/phonNolinearContainer"
+            app:layout_constraintTop_toBottomOf="@+id/phonNolinearContainer">
+
+            <TextView
+                android:id="@+id/EmailTvProfile"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/EmailDynamicTvProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="qamaranwar333@gmail.com" />
+
+
+        </LinearLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

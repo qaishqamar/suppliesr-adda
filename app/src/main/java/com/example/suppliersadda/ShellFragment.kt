@@ -1,8 +1,6 @@
 package com.example.suppliersadda
 
 import android.Manifest
-import android.R.attr
-import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
@@ -15,16 +13,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
-import com.example.suppliersadda.R.id.ChipsRadioButton
-import com.example.suppliersadda.R.id.pin
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.fragment_shell.*
-import kotlinx.android.synthetic.main.fragment_shell.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -245,7 +238,7 @@ for permission override
         for (uri in imagesUriList!!){
             val filename = UUID.randomUUID().toString()
             val ref = FirebaseStorage.getInstance().getReference("/DealersImages/$filename")
-            Log.d("Images url", "$uri")
+            Log.d("Images UrI", "$uri")
             ref.putFile(uri).addOnSuccessListener {
                 Log.d("Images url", "${it}")
                 imagesUrlList!!.add(it.toString())
@@ -268,11 +261,16 @@ for permission override
         val picPath1:String=imagesUrlList!!.get(0)
         val picPath2:String=imagesUrlList!!.get(1)
         val picPath3:String=imagesUrlList!!.get(2)
-        Log.d("UrlList1"," ${imagesUrlList!!.get(0)}")
-        Log.d("UrlList2"," ${imagesUrlList!![1]}")
-        Log.d("UrlList1"," ${imagesUrlList!!.get(2)}")
-       val dealersDataModel=DealersDataModel(vehicle.text.toString(),selectedmaterial!!,localityAutoCompleteTextView.text.toString(),pinShell.text.toString(),cityAdresEtShel.text.toString(),uid,
-           picPath1,
+        Log.d("Images url"," ${imagesUrlList!!.get(0)}")
+        Log.d("Images url"," ${imagesUrlList!!.get(1)}")
+        Log.d("Images url"," ${imagesUrlList!!.get(2)}+ $picPath1")
+       val dealersDataModel=DealersDataModel(
+           vehicle.text.toString(),
+           selectedmaterial!!,
+           localityAutoCompleteTextView.text.toString(),
+           pinShell.text.toString(),
+           cityAdresEtShel.text.toString(),
+           uid,picPath1,
            picPath2,
            picPath3
        )
@@ -280,12 +278,12 @@ for permission override
 
         ref.setValue(dealersDataModel)
             .addOnSuccessListener {
-                Log.d("Main","user detail is uploaded")
+                Log.d("Images url","user detail is uploaded")
               Toast.makeText(context,"Dealers data saved succesfully",Toast.LENGTH_SHORT).show()
             }
 
             .addOnFailureListener {
-                Log.d("Main","details re not uploaded :try again")
+                Log.d("Images url","details re not uploaded :try again")
                 Toast.makeText(context,"dealers details not uploaded",Toast.LENGTH_SHORT).show()
 
             }
