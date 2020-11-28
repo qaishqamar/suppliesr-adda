@@ -234,7 +234,10 @@ for permission override
 
 
     private fun uploadImagrToFirebase() {
-
+       val sharePrefUsersData=SharePrefUsersData(activity!!)
+        val usersData=sharePrefUsersData.getUserDataPref()
+        val userPicUri=Uri.parse(usersData.image)
+        imagesUriList!!.add(userPicUri)
         for (uri in imagesUriList!!){
             val filename = UUID.randomUUID().toString()
             val ref = FirebaseStorage.getInstance().getReference("/DealersImages/$filename")
@@ -244,7 +247,7 @@ for permission override
                 imagesUrlList!!.add(it.toString())
                 if (imagesUriList!!.size== imagesUrlList!!.size&&imagesUrlList!!.isNotEmpty()){
                     Toast.makeText(context,"images are uploded successfully",Toast.LENGTH_SHORT).show()
-                    saveDealersDataFb()
+                    saveDealersDataFb(usersData)
                 }
             }
                 .addOnFailureListener{
@@ -256,15 +259,20 @@ for permission override
 
     }
 
-    private fun saveDealersDataFb() {
+    private fun saveDealersDataFb(usersData: UserData) {
         val uid=FirebaseAuth.getInstance().uid?:""
         val picPath1:String=imagesUrlList!!.get(0)
         val picPath2:String=imagesUrlList!!.get(1)
         val picPath3:String=imagesUrlList!!.get(2)
+        val userPic:String=imagesUrlList!!.get(3)
         Log.d("Images url"," ${imagesUrlList!!.get(0)}")
         Log.d("Images url"," ${imagesUrlList!!.get(1)}")
         Log.d("Images url"," ${imagesUrlList!!.get(2)}+ $picPath1")
        val dealersDataModel=DealersDataModel(
+           usersData.userNmae,
+           usersData.PhoneNo,
+           usersData.email,
+           userPic,
            vehicle.text.toString(),
            selectedmaterial!!,
            localityAutoCompleteTextView.text.toString(),

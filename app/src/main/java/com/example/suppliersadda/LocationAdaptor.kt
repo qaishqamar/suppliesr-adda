@@ -1,32 +1,63 @@
 package com.example.suppliersadda
 
 import android.app.Activity
+import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.location_unit.view.*
 
-//class LocationAdaptor(private val context: Activity,val locationList:Array<String> )  : ArrayAdapter<Any>(context, R.layout.location_unit,locationList) {
-//    override fun getCount(): Int {
-//        return locationList.size
-//    }
-//    override fun getItem(position: Int): Any{
-//        return position
-//    }
-//    override fun getItemId(position: Int): Long {
-//        return position.toLong()
-//    }
-//
-//        override fun getView(position: Int, view: View?, parent: ViewGroup): View {
-//            val inflater = context.layoutInflater
-//            val rowView = inflater.inflate(R.layout.location_unit, null, true)
-//
-//            val locationText = rowView.findViewById(R.id.locatoinTextUnit) as TextView
-//            locationText.text=locationList[position]
-//
-//
-//
-//            return rowView
-//        }
-//
-//}
+class LocationAdaptor(val context: Context, private val locations: Array<String>)  :
+    RecyclerView.Adapter<LocationAdaptor.MyViewHolder>(){
+
+    override fun onCreateViewHolder(parent:ViewGroup, viewtype: Int): MyViewHolder {
+        val view=LayoutInflater.from(context).inflate(R.layout.location_unit,parent,false)
+        return MyViewHolder(view)
+    }
+
+    override fun getItemCount(): Int {
+        return locations.size
+    }
+
+    override fun onBindViewHolder(holder: MyViewHolder, possition: Int) {
+        val location=locations[possition]
+        holder.SetData(location,possition)
+
+    }
+    companion object{
+        val USER_KEY = "USER_KEY"
+    }
+    inner class MyViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView) {
+        var currentLocation: String? = null
+        var curretPossition: Int = 0
+
+        init {
+            itemView.setOnClickListener {
+                //val intent=Intent(this,NewsWebsite::class.java)
+                // startActivity(intent)
+
+
+            }
+//            itemView.cv1mask_tips.setOnClickListener {
+//                val massage: String = "My hobby is :"+currentHobby!!.tittle
+//                val intent= Intent()
+//                intent.action= Intent.ACTION_SEND
+//                intent.putExtra(Intent.EXTRA_TEXT,massage)
+//                intent.type="text/plain"
+//                context.startActivity(Intent.createChooser(intent,"share to"))
+//            }
+        }
+
+        fun SetData(location : String?, poss: Int) {
+
+            itemView.locatoinTextUnit.text = location
+            this.currentLocation = location
+            this.curretPossition = poss
+
+        }
+    }
+
+}

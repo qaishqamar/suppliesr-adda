@@ -50,5 +50,7 @@ dependencies {
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
 
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation "com.xwray:groupie:2.7.0"
 
 }
