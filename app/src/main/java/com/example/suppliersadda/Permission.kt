@@ -1,14 +1,11 @@
 package com.example.suppliersadda
 
-import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
-import android.util.Log
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import java.security.Permission
+import com.example.suppliersadda.Activity.Registration
 
 class PermissionGet(val context:Context,val activity: Activity) {
 

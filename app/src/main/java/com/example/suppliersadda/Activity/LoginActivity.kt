@@ -1,4 +1,4 @@
-package com.example.suppliersadda
+package com.example.suppliersadda.Activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,8 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import com.example.suppliersadda.Models.LoginModel
+import com.example.suppliersadda.R
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
@@ -31,7 +33,7 @@ open class LoginActivity : AppCompatActivity() {
 
 
     fun ButtonClick(view: View) {
-        val loginModel=LoginModel()
+        val loginModel= LoginModel()
         when(view){
             LoginButton->{ loginModel.LoginTextCheck(TextEmailId,TextEmailId)
                 val email=emailId_et_login.text.toString()
@@ -40,13 +42,13 @@ open class LoginActivity : AppCompatActivity() {
                 Log.d("LoginActivity","login password :$password")
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(email,password)
                   .addOnCompleteListener {
-                      val intent=Intent(this,MainActivity::class.java)
+                      val intent=Intent(this, MainActivity::class.java)
                       startActivity(intent)
                   }
                   .addOnFailureListener {  }
             }
             RessisterTv->{
-                val intent=Intent(this,Registration::class.java)
+                val intent=Intent(this, Registration::class.java)
                 startActivity(intent)
             }
         }

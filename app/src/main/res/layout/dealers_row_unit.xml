@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:src="@drawable/ic_action_profile"
         app:civ_border_color="#FF000000"
@@ -21,27 +20,27 @@
 
     <TextView
         android:id="@+id/dealerNameUnit"
-        android:textSize="18sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:padding="10dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:padding="8dp"
         android:text="Qaish Qamar"
-        android:textStyle="italic"
         android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="@+id/profile_image"
         app:layout_constraintStart_toEndOf="@+id/profile_image"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.526" />
+        app:layout_constraintVertical_bias="0.421" />
 
     <ImageView
         android:id="@+id/dvehiclepicDealerUnit"
-        android:layout_width="175dp"
-        android:layout_height="130dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="87dp"
+        android:layout_height="113dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_image"
         tools:srcCompat="@tools:sample/avatars" />
@@ -50,9 +49,9 @@
         android:id="@+id/localityDealerUnit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="12dp"
         android:padding="8dp"
         android:text="Locality"
         app:layout_constraintStart_toEndOf="@+id/dvehiclepicDealerUnit"
@@ -64,35 +63,33 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Ranchi"
-        app:layout_constraintStart_toStartOf="@+id/localityDealerUnit"
-        app:layout_constraintTop_toBottomOf="@+id/localityDealerUnit" />
+        app:layout_constraintEnd_toEndOf="@+id/pinCodeDelerUnit"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/pinCodeDelerUnit"
+        app:layout_constraintTop_toBottomOf="@+id/pinCodeDelerUnit" />
 
     <TextView
         android:id="@+id/pinCodeDelerUnit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:text="834009"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/cityTvdealerunit"
+        app:layout_constraintEnd_toEndOf="@+id/localityDealerUnit"
+        app:layout_constraintHorizontal_bias="0.352"
+        app:layout_constraintStart_toStartOf="@+id/localityDealerUnit"
         app:layout_constraintTop_toBottomOf="@+id/localityDealerUnit" />
 
     <TextView
         android:id="@+id/sulierTypeDealerUnit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
         android:text="Raw Material"
-        android:textStyle="bold"
-        android:textSize="16sp"
         android:textColor="@android:color/holo_purple"
-        app:layout_constraintStart_toEndOf="@+id/dvehiclepicDealerUnit"
-        app:layout_constraintTop_toTopOf="@+id/dvehiclepicDealerUnit" />
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/dealerNameUnit"
+        app:layout_constraintHorizontal_bias="0.235"
+        app:layout_constraintStart_toEndOf="@+id/profile_image"
+        app:layout_constraintTop_toBottomOf="@+id/dealerNameUnit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

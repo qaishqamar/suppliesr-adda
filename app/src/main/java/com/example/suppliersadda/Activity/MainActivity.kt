@@ -1,17 +1,19 @@
-package com.example.suppliersadda
+package com.example.suppliersadda.Activity
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
 import androidx.fragment.app.FragmentTransaction
+import com.example.suppliersadda.Fragments.HomeFragment
+import com.example.suppliersadda.Fragments.ProfileFragment
+import com.example.suppliersadda.Fragments.ShellFragment
+import com.example.suppliersadda.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    lateinit var homeFragment:HomeFragment
+    lateinit var homeFragment: HomeFragment
     lateinit var shellFragment: ShellFragment
     lateinit var profileFragment: ProfileFragment
 
@@ -20,6 +22,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // for checking user is registered or not
+        VerifyUser()
 
         // as default fragment
         homeFragment= HomeFragment()
@@ -31,13 +36,13 @@ class MainActivity : AppCompatActivity() {
 
 
         button_login.setOnClickListener {
-            val intent=Intent(this,LoginActivity::class.java)
+            val intent=Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
         val  bottomNavigation=findViewById<BottomNavigationView>(R.id.bottom_nav_layout)
         bottomNavigation.setOnNavigationItemSelectedListener {item->
                   when(item.itemId){
-                     R.id.homeid->{
+                     R.id.homeid ->{
                          homeFragment= HomeFragment()
                          supportFragmentManager
                              .beginTransaction()
@@ -46,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                              .commit()
 
                      }
-                      R.id.shelid->{
+                      R.id.shelid ->{
                           shellFragment= ShellFragment()
                           supportFragmentManager
                               .beginTransaction()
@@ -55,7 +60,7 @@ class MainActivity : AppCompatActivity() {
                               .commit()
 
                       }
-                      R.id.profileid->{
+                      R.id.profileid ->{
                           profileFragment= ProfileFragment()
                           supportFragmentManager
                               .beginTransaction()
@@ -66,6 +71,16 @@ class MainActivity : AppCompatActivity() {
                       }
                   }
             true
+        }
+    }
+    fun VerifyUser(){
+        val uid= FirebaseAuth.getInstance().uid
+        if(uid==null)
+        {
+            val intent=Intent(this,
+                LoginActivity::class.java)
+            intent.flags=Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
         }
     }
 }

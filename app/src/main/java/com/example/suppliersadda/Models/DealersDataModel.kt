@@ -1,4 +1,4 @@
-package com.example.suppliersadda
+package com.example.suppliersadda.Models
 
 import java.util.ArrayList
 

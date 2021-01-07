@@ -1,4 +1,4 @@
-package com.example.suppliersadda
+package com.example.suppliersadda.Fragments
 
 import android.Manifest
 import android.app.Activity.RESULT_OK
@@ -13,6 +13,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import com.example.suppliersadda.*
+import com.example.suppliersadda.Activity.Registration
+import com.example.suppliersadda.Models.DealersDataModel
+import com.example.suppliersadda.Models.SharePrefUsersData
+import com.example.suppliersadda.Models.UserData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -94,9 +99,10 @@ class ShellFragment : Fragment() {
         val arrayAdapter =
             ArrayAdapter(activity!!,
                 android.R.layout.simple_list_item_1,
-                Registration.localitiesArray)
+                Registration.localitiesArray
+            )
         localityId.setAdapter(arrayAdapter)
-        val permissionGet=PermissionGet(context!!, activity!!)
+        val permissionGet= PermissionGet(context!!, activity!!)
 
         DealerResisterbtn.setOnClickListener {
             Toast.makeText(context, "button clicked", Toast.LENGTH_SHORT).show()
@@ -137,13 +143,13 @@ class ShellFragment : Fragment() {
        }
         materialRadioBtn.setOnCheckedChangeListener { compoundButton, b ->
             when(b){
-                R.id.ChipsRadioButton->{selectedmaterial="Chips"
+                R.id.ChipsRadioButton ->{selectedmaterial="Chips"
 
                 }
-                R.id.RawMaterialRadioButton->{
+                R.id.RawMaterialRadioButton ->{
                     selectedmaterial="Rawmaterial"
                 }
-                R.id.humanRadioButton->{
+                R.id.humanRadioButton ->{
                     selectedmaterial="Human"
                 }
 
@@ -234,7 +240,7 @@ for permission override
 
 
     private fun uploadImagrToFirebase() {
-       val sharePrefUsersData=SharePrefUsersData(activity!!)
+       val sharePrefUsersData= SharePrefUsersData(activity!!)
         val usersData=sharePrefUsersData.getUserDataPref()
         val userPicUri=Uri.parse(usersData.image)
         imagesUriList!!.add(userPicUri)
@@ -243,11 +249,18 @@ for permission override
             val ref = FirebaseStorage.getInstance().getReference("/DealersImages/$filename")
             Log.d("Images UrI", "$uri")
             ref.putFile(uri).addOnSuccessListener {
-                Log.d("Images url", "${it}")
-                imagesUrlList!!.add(it.toString())
-                if (imagesUriList!!.size== imagesUrlList!!.size&&imagesUrlList!!.isNotEmpty()){
-                    Toast.makeText(context,"images are uploded successfully",Toast.LENGTH_SHORT).show()
-                    saveDealersDataFb(usersData)
+
+                ref.downloadUrl.addOnSuccessListener {
+                    Log.d("Images url", "${it}")
+                    imagesUrlList!!.add(it.toString())
+                    if (imagesUriList!!.size == imagesUrlList!!.size && imagesUrlList!!.isNotEmpty()) {
+                        Toast.makeText(
+                            context,
+                            "images are uploded successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        saveDealersDataFb(usersData)
+                    }
                 }
             }
                 .addOnFailureListener{
@@ -268,7 +281,7 @@ for permission override
         Log.d("Images url"," ${imagesUrlList!!.get(0)}")
         Log.d("Images url"," ${imagesUrlList!!.get(1)}")
         Log.d("Images url"," ${imagesUrlList!!.get(2)}+ $picPath1")
-       val dealersDataModel=DealersDataModel(
+       val dealersDataModel= DealersDataModel(
            usersData.userNmae,
            usersData.PhoneNo,
            usersData.email,

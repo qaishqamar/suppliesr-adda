@@ -1,10 +1,11 @@
-package com.example.suppliersadda
+package com.example.suppliersadda.Adaptor
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.suppliersadda.R
 import kotlinx.android.synthetic.main.vehicle_filter_unit.view.*
 
 class VehicleAdapter(val context: Context, private val vehicles: Array<String>,val vehiclePics:Array<Int>): RecyclerView.Adapter<VehicleAdapter.MyVehicleViewHolder>()

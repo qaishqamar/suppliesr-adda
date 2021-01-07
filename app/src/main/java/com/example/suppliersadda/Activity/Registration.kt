@@ -1,8 +1,6 @@
-package com.example.suppliersadda
+package com.example.suppliersadda.Activity
 
 //import com.google.firebase.storage.FirebaseStorage
-import android.R.attr
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -16,12 +14,16 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.suppliersadda.Models.LoginModel
+import com.example.suppliersadda.Models.SharePrefUsersData
+import com.example.suppliersadda.Models.UserData
+import com.example.suppliersadda.PermissionGet
+import com.example.suppliersadda.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
-import kotlinx.android.synthetic.main.activity_registration.*
 import java.util.*
 
 
@@ -127,7 +129,7 @@ class Registration : AppCompatActivity() {
         userPref=getSharedPreferences(FileNameSherdPref,Context.MODE_PRIVATE)
 
         registerBtRg.setOnClickListener {
-            val loginModel=LoginModel()
+            val loginModel= LoginModel()
 
             val strUserName=userNameRg.text.toString()
             val textcheckRes=loginModel.LoginTextCheck(emailRg, passwordRg)
@@ -138,7 +140,7 @@ class Registration : AppCompatActivity() {
                 }
         }
         imageTakRg.setOnClickListener {
-            val permissionGet=PermissionGet(this, this@Registration)
+            val permissionGet= PermissionGet(this, this@Registration)
             val permissionName=android.Manifest.permission.READ_EXTERNAL_STORAGE
             if (permissionGet.checkperrmission(permissionName)){
                 Log.d("Main", "Try to show photo selecter")
@@ -207,7 +209,7 @@ class Registration : AppCompatActivity() {
                 //else successful
                 else{
                    // uploadImagrToFirebase()
-                    val sharePrefUsersData=SharePrefUsersData(this)
+                    val sharePrefUsersData= SharePrefUsersData(this)
                     sharePrefUsersData.saveUserData(userNameRg.text.toString(),
                         mobileNoRg.text.toString(),
                         emailRg.text.toString(),

@@ -1,14 +1,12 @@
-package com.example.suppliersadda
+package com.example.suppliersadda.Models
 
-import android.content.Intent
 import android.text.TextUtils
-import android.util.Log
 import android.widget.EditText
-import android.widget.Toast
+import com.example.suppliersadda.Activity.LoginActivity
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-class LoginModel():LoginActivity(){
+class LoginModel(): LoginActivity(){
      fun LoginTextCheck(email:EditText,pass:EditText):Boolean{
         val strEmail=email.text.toString().trim()
         val strPassword= pass.text.toString().trim()

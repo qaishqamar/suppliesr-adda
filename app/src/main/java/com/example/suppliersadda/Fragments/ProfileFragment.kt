@@ -1,4 +1,4 @@
-package com.example.suppliersadda
+package com.example.suppliersadda.Fragments
 
 import android.net.Uri
 import android.os.Bundle
@@ -9,12 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.squareup.picasso.Picasso
+import com.example.suppliersadda.R
+import com.example.suppliersadda.Models.SharePrefUsersData
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 
@@ -48,7 +44,7 @@ class ProfileFragment : Fragment() {
     }
 fun fetchUserData(){
 //    val registration=Registration()
-    val sharePrefUsersData=SharePrefUsersData(activity!!)
+    val sharePrefUsersData= SharePrefUsersData(activity!!)
     val userData=sharePrefUsersData.getUserDataPref()
     if (userData!=null){
         Log.d("profile","${userData!!.userNmae}")

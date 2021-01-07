@@ -1,4 +1,4 @@
-package com.example.suppliersadda
+package com.example.suppliersadda.Fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.suppliersadda.*
+import com.example.suppliersadda.Activity.Registration
+import com.example.suppliersadda.Adaptor.LocationAdaptor
+import com.example.suppliersadda.Adaptor.VehicleAdapter
+import com.example.suppliersadda.Models.DealersDataModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -50,7 +55,7 @@ class HomeFragment : Fragment() {
 
         val vehicleAdapter =
             VehicleAdapter(activity!!, Registration.vehicleArray, Registration.vehiclePicArray)
-        vehicleRecyclerView.layoutManager = GridLayoutManager(context, 3)
+
 
         vehicleRecyclerView.adapter = vehicleAdapter
     }
@@ -70,6 +75,8 @@ class HomeFragment : Fragment() {
                 //adapter.setOnItemClickListener{item,view->
                 //    val intent=Intent(th)
                 // }
+                 delearRecyclerView.layoutManager=GridLayoutManager(context,2)
+
                 delearRecyclerView.adapter=adapter
             }
 
@@ -92,12 +99,13 @@ class UserItem(val dealer: DealersDataModel): Item<GroupieViewHolder>(){
         viewHolder.itemView.cityTvdealerunit.text=dealer.city
         viewHolder.itemView.pinCodeDelerUnit.text=dealer.pin
         viewHolder.itemView.sulierTypeDealerUnit.text=dealer.transMaterial
-        Picasso.get().load(dealer.userImage).into(viewHolder.itemView.profile_image)
+
         if (viewHolder.itemView.profile_image!=null&&viewHolder.itemView.dvehiclepicDealerUnit!=null&&dealer.userImage!=null) {
             Log.d("DealerFetch","image ${dealer.userImage}")
-
+            Picasso.get().load(dealer.userImage).into(viewHolder.itemView.profile_image)
             Log.d("DealerFetch","image ${dealer.imageFirst}")
             Picasso.get().load(dealer.imageFirst).into(viewHolder.itemView.dvehiclepicDealerUnit)
+
         }
     }
 }

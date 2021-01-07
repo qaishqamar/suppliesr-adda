@@ -1,9 +1,9 @@
-package com.example.suppliersadda
+package com.example.suppliersadda.Models
 
 import android.app.Activity
 import android.content.Context
-import android.content.SharedPreferences
 import android.util.Log
+import com.example.suppliersadda.Activity.Registration
 import com.google.firebase.auth.FirebaseAuth
 
 class SharePrefUsersData(val activity: Activity) {
@@ -12,7 +12,8 @@ class SharePrefUsersData(val activity: Activity) {
 
 
    val userPref=activity.getSharedPreferences(Registration.FileNameSherdPref, Context.MODE_PRIVATE)
-    fun getUserDataPref():UserData{
+
+    fun getUserDataPref(): UserData {
 
         val uid= FirebaseAuth.getInstance().uid?:""
         var userPic:String?=""
@@ -25,11 +26,11 @@ class SharePrefUsersData(val activity: Activity) {
             userPic=   userPref.getString("USER_PIC","")
             userName=userPref.getString("USER_NAME","")
             userNum=userPref.getString("USER_NUMB","")
-            userEmail= userPref.getString("USER_NAME","")
+            userEmail= userPref.getString("USER_EMAIL","")
 
         }
         Log.d("Main", "data GET PROCESS 6")
-        val userShare=UserData(uid,userName!!,userNum!!,userEmail!!,userPic!!)
+        val userShare= UserData(uid,userName!!,userNum!!,userEmail!!,userPic!!)
         return userShare
     }
 
