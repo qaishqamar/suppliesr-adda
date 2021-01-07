@@ -3,6 +3,7 @@ package com.example.suppliersadda.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.FragmentTransaction
 import com.example.suppliersadda.Fragments.HomeFragment
 import com.example.suppliersadda.Fragments.ProfileFragment
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var shellFragment: ShellFragment
     lateinit var profileFragment: ProfileFragment
 
+    lateinit var toggle: ActionBarDrawerToggle
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +27,9 @@ class MainActivity : AppCompatActivity() {
 
         // for checking user is registered or not
         VerifyUser()
+
+        //ActionBar drawer toggle
+        //toggle = ActionBarDrawerToggle(this)
 
         // as default fragment
         homeFragment= HomeFragment()
