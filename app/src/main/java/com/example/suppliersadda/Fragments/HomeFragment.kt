@@ -1,14 +1,18 @@
 package com.example.suppliersadda.Fragments
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.suppliersadda.*
+import com.example.suppliersadda.Activity.DealersProfileActivity
 import com.example.suppliersadda.Activity.Registration
 import com.example.suppliersadda.Adaptor.LocationAdaptor
 import com.example.suppliersadda.Adaptor.VehicleAdapter
@@ -81,7 +85,7 @@ class HomeFragment : Fragment() {
             }
 
             override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
             }
         })
 
@@ -100,12 +104,18 @@ class UserItem(val dealer: DealersDataModel): Item<GroupieViewHolder>(){
         viewHolder.itemView.pinCodeDelerUnit.text=dealer.pin
         viewHolder.itemView.sulierTypeDealerUnit.text=dealer.transMaterial
 
+        // onItem click events
+           viewHolder.itemView.dealerNameUnit.setOnClickListener {
+//               val intent=Intent(this,DealersProfileActivity::class.java)
+//               startActivity(intent)
+
+           }
+
         if (viewHolder.itemView.profile_image!=null&&viewHolder.itemView.dvehiclepicDealerUnit!=null&&dealer.userImage!=null) {
             Log.d("DealerFetch","image ${dealer.userImage}")
             Picasso.get().load(dealer.userImage).into(viewHolder.itemView.profile_image)
             Log.d("DealerFetch","image ${dealer.imageFirst}")
             Picasso.get().load(dealer.imageFirst).into(viewHolder.itemView.dvehiclepicDealerUnit)
-
         }
     }
 }
