@@ -54,5 +54,6 @@ dependencies {
     implementation "com.xwray:groupie:2.7.0"
 
     implementation 'com.google.android.material:material:1.2.0-alpha04'
-
+    // for slider
+    implementation 'com.synnapps:carouselview:0.1.5'
 }

@@ -33,12 +33,14 @@ class Registration : AppCompatActivity() {
         var permissionGrant=false
         val PermissionCode=1
         val FileNameSherdPref="com.supplierAdda.UserProfile"
-        val vehicleArray= arrayOf("CARS", "TRUCKS", "JCB", "AUTO", "SUV", "TRACTOR", "BUS")
+        val vehicleArray= arrayOf("CARS", "TRUCKS", "TRACTOR", "JCB", "AUTO", "SUV", "BUS")
         val  vehiclePicArray= arrayOf(
-            R.drawable.vehicle_pic_icon,
-            R.drawable.vehicle_pic_icon,
-            R.drawable.vehicle_pic_icon,
-            R.drawable.vehicle_pic_icon,
+
+
+            R.drawable.car,
+            R.drawable.truck,
+            R.drawable.tractor,
+            R.drawable.caradd,
             R.drawable.vehicle_pic_icon,
             R.drawable.vehicle_pic_icon,
             R.drawable.vehicle_pic_icon
