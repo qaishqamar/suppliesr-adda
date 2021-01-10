@@ -51,6 +51,7 @@
 
     <!--    Container for contents of drawer-->
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_View"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         app:headerLayout="@layout/nav_header"

@@ -4,9 +4,9 @@
          android:id="@+id/homeid"
          android:icon="@drawable/ic_action_home"
         />
-    <item android:title="Shel"
+    <item android:title="Sell"
         android:id="@+id/shelid"
-        android:icon="@drawable/ic_action_shell"
+        android:icon="@drawable/ic_action_rent"
         />
     <item android:title="Profile"
         android:id="@+id/profileid"
