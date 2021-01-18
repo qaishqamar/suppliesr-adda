@@ -4,10 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.SearchView
 import android.widget.Toast
+import android.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +18,7 @@ import com.example.suppliersadda.Adaptor.LocationAdaptor
 import com.example.suppliersadda.Adaptor.VehicleAdapter
 import com.example.suppliersadda.Models.DealersDataModel
 import com.example.suppliersadda.R
+import com.example.suppliersadda.R.id
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -40,16 +42,20 @@ private const val ARG_PARAM2 = "param2"
 class HomeFragment : Fragment() {
      val addImageArr= arrayOf<Int>(
          R.drawable.ic_action_home,
-         R.drawable.caradd,
+        // R.drawable.caradd,
 
          R.drawable.irhastamp
 
      )
      lateinit var carouselView:CarouselView
     lateinit var delearRecyclerView: RecyclerView
+    lateinit var searchView: SearchView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setHasOptionsMenu(true)
         super.onCreate(savedInstanceState)
+        Log.d("topbar","click event ")
 
     }
 
@@ -59,6 +65,9 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false)
+
+      //  inflate tobbar menu
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -90,14 +99,51 @@ class HomeFragment : Fragment() {
         }
 
 
-//        val imageListener = ImageListener { position, imageView ->
-//            imageView.setImageResource(
-//                addImageArr.get(
-//                    position
-//                )
-//            )
-//        }
+        homTopToolbar.setNavigationOnClickListener {
+            Toast.makeText(context,"icon clicked",Toast.LENGTH_SHORT).show()
+        }
+        homTopToolbar.inflateMenu(R.menu.topbar)
+       homTopToolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.cloud_menu_topbar -> {
+                    Toast.makeText(context,"tips is underdevolopment",Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.search_menu_topbar-> {
+                    Toast.makeText(context,"search is underdevolopment",Toast.LENGTH_SHORT).show()
+                    true
+                }
+                else -> {
+                    super.onOptionsItemSelected(it)
+                }
+            }
+        }
+
+
     }
+
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater){
+//        inflater!!.inflate(R.menu.topbar,menu)
+//        Log.d("topbar","click event ")
+//        super.onCreateOptionsMenu(menu, inflater);
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        val itemView=item.itemId
+//        Log.d("topbar","click event ")
+//        when(itemView){
+//           R.id.search_menu_topbar->{
+//               Toast.makeText(context,"search is underdevolopment",Toast.LENGTH_SHORT).show()
+//
+//            }
+//            R.id.cloud_menu_topbar->{
+//                Toast.makeText(context,"tips is underdevolopment",Toast.LENGTH_SHORT).show()
+//
+//            }
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
+//
 
 
 

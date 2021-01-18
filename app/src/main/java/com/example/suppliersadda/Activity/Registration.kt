@@ -38,9 +38,9 @@ class Registration : AppCompatActivity() {
 
 
             R.drawable.car,
-            R.drawable.truck,
-            R.drawable.tractor,
-            R.drawable.caradd,
+            R.drawable.vehicle_pic_icon ,
+            R.drawable.vehicle_pic_icon,
+            R.drawable.vehicle_pic_icon,
             R.drawable.vehicle_pic_icon,
             R.drawable.vehicle_pic_icon,
             R.drawable.vehicle_pic_icon

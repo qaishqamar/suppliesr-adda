@@ -40,10 +40,10 @@ class MainActivity : AppCompatActivity() {
             .commit()
 
 
-        button_login.setOnClickListener {
-            val intent=Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-        }
+//        button_login.setOnClickListener {
+//            val intent=Intent(this, LoginActivity::class.java)
+//            startActivity(intent)
+//        }
         val  bottomNavigation=findViewById<BottomNavigationView>(R.id.bottom_nav_layout)
         bottomNavigation.setOnNavigationItemSelectedListener {item->
                   when(item.itemId){

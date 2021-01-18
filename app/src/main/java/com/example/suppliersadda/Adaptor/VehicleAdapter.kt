@@ -22,7 +22,8 @@ class VehicleAdapter(val context: Context, private val vehicles: Array<String>,v
     }
     override fun onBindViewHolder(holder: MyVehicleViewHolder, position: Int) {
         val vehicle=vehicles[position]
-        holder.SetData(vehicle,position)
+        val vehiclesPics=vehiclePics[position]
+        holder.SetData(vehicle,position,vehiclesPics)
 
     }
 
@@ -32,6 +33,7 @@ class VehicleAdapter(val context: Context, private val vehicles: Array<String>,v
     inner class MyVehicleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var currentVehicle: String? = null
         var curretPossition: Int = 0
+        var currentPics:Int?=0
 
         init {
             itemView.setOnClickListener {
@@ -50,11 +52,12 @@ class VehicleAdapter(val context: Context, private val vehicles: Array<String>,v
 //            }
         }
 
-        fun SetData(vehicle : String?, poss: Int) {
-            itemView.vehicleImageUnit.setImageResource(R.drawable.vehicle_pic_icon)
+        fun SetData(vehicle : String?, poss: Int,pics:Int?) {
+            itemView.vehicleImageUnit.setImageResource(pics!!)
             itemView.vehicleNameUnitTv.text = vehicle
             this.currentVehicle = vehicle
             this.curretPossition = poss
+            this.currentPics=pics
 
         }
     }
