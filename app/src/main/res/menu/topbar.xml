@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/search_menu_topbar"
+          app:showAsAction="always"
+          android:icon="@drawable/ic_baseline_search_24"
+          android:title="Search" />
+
+    <item android:id="@+id/cloud_menu_topbar"
+        android:icon="@drawable/ic_baseline_cloud_24"
+        app:showAsAction="always"
+        android:title="tips"/>
+
+</menu>
