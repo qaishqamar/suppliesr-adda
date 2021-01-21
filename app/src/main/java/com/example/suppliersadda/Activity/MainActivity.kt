@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.MenuItem
 import android.widget.ImageView
@@ -63,10 +64,13 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId) {
                 R.id.nav_home ->{
                     val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)}
+                    startActivity(intent)
+                }
 
-                R.id.nav_profile -> Toast.makeText(applicationContext,
-                    "clicked Profile", Toast.LENGTH_SHORT).show()
+                R.id.nav_profile -> {
+                    val intent = Intent(this,ProfileActivity::class.java)
+                    startActivity(intent)
+                }
 
                 R.id.navigation_settings -> Toast.makeText(applicationContext,
                     "clicked Settings", Toast.LENGTH_SHORT).show()
@@ -173,6 +177,22 @@ class MainActivity : AppCompatActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+
+    //Handling double back pressed
+    private var doubleBackToExitPressedOnce = false
+    override fun onBackPressed() {
+
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed()
+            return
+        }
+
+        this.doubleBackToExitPressedOnce = true
+        Toast.makeText(this,"Please click BACK again to exit", Toast.LENGTH_SHORT).show()
+
+        Handler().postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
     }
 }
 
