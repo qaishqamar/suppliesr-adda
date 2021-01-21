@@ -191,7 +191,6 @@ class MainActivity : AppCompatActivity() {
 
         this.doubleBackToExitPressedOnce = true
         Toast.makeText(this,"Please click BACK again to exit", Toast.LENGTH_SHORT).show()
-
         Handler().postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
     }
 }
