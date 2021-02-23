@@ -51,29 +51,29 @@ class ShellFragment : Fragment() {
     var selected_photo1_uri: Uri? = null
     var selected_photo2_uri: Uri? = null
     var selected_photo3_uri: Uri? = null
-    var pikedImageCode=0
-    lateinit var materialRadioBtn:RadioGroup
-    var selectedmaterial:String?=null
-    lateinit var pinShell:EditText
+    var pikedImageCode = 0
+    lateinit var materialRadioBtn: RadioGroup
+    var selectedmaterial: String? = null
+    lateinit var pinShell: EditText
 //    lateinit var chipsRadioButton: RadioButton
 //    lateinit var humanRadioButton:RadioButton
 //    lateinit var rawRadioButton: RadioButton
 
     lateinit var mContext: Context
     lateinit var mAuth: FirebaseAuth
-    var imagesUriList:ArrayList<Uri>?=null
-    var imagesUrlList:ArrayList<String>?=null
+    var imagesUriList: ArrayList<Uri>? = null
+    var imagesUrlList: ArrayList<String>? = null
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        mContext=context
+        mContext = context
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        imagesUriList=ArrayList()
-        imagesUrlList=ArrayList()
+        imagesUriList = ArrayList()
+        imagesUrlList = ArrayList()
         return inflater.inflate(R.layout.fragment_shell, container, false)
     }
 
@@ -91,18 +91,19 @@ class ShellFragment : Fragment() {
         pic1Img = view!!.findViewById(R.id.select_circleImageView1_register)
         pic2Img = view!!.findViewById(R.id.select_circleImageView2_register)
         pic3Img = view!!.findViewById(R.id.select_circleImageView3_register)
-        vehicle=view!!.findViewById(R.id.vehicleShelEt)
-        materialRadioBtn=view!!.findViewById(R.id.radioGroup)
-        pinShell=view!!.findViewById(R.id.pinCodeID)
+        vehicle = view!!.findViewById(R.id.vehicleShelEt)
+        materialRadioBtn = view!!.findViewById(R.id.radioGroup)
+        pinShell = view!!.findViewById(R.id.pinCodeID)
 
 
         val arrayAdapter =
-            ArrayAdapter(activity!!,
+            ArrayAdapter(
+                activity!!,
                 android.R.layout.simple_list_item_1,
                 Registration.localitiesArray
             )
         localityId.setAdapter(arrayAdapter)
-        val permissionGet= PermissionGet(context!!, activity!!)
+        val permissionGet = PermissionGet(context!!, activity!!)
 
         DealerResisterbtn.setOnClickListener {
             Toast.makeText(context, "button clicked", Toast.LENGTH_SHORT).show()
@@ -111,8 +112,8 @@ class ShellFragment : Fragment() {
         }
         pic1Btn.setOnClickListener {
 
-            val permissionName=Manifest.permission.READ_EXTERNAL_STORAGE
-            if (permissionGet.checkperrmission(permissionName)){
+            val permissionName = Manifest.permission.READ_EXTERNAL_STORAGE
+            if (permissionGet.checkperrmission(permissionName)) {
                 Log.e("DB", "PERMISSION GRANTED")
 
                 PickImage(1)
@@ -121,59 +122,62 @@ class ShellFragment : Fragment() {
         }
 
         pic2Btn.setOnClickListener {
-            val permissionName=Manifest.permission.READ_EXTERNAL_STORAGE
-          if (permissionGet.checkperrmission(permissionName)){
-              Log.e("DB", "PERMISSION GRANTED")
-              PickImage(2)
+            val permissionName = Manifest.permission.READ_EXTERNAL_STORAGE
+            if (permissionGet.checkperrmission(permissionName)) {
+                Log.e("DB", "PERMISSION GRANTED")
+                PickImage(2)
 
-          }
+            }
         }
         pic3Btn.setOnClickListener {
-            val permissionName=Manifest.permission.READ_EXTERNAL_STORAGE
-            if (permissionGet.checkperrmission(permissionName)){
+            val permissionName = Manifest.permission.READ_EXTERNAL_STORAGE
+            if (permissionGet.checkperrmission(permissionName)) {
                 Log.e("DB", "PERMISSION GRANTED")
                 PickImage(3)
 
             }
         }
-       DealerResisterbtn.setOnClickListener {
-           if (vehicle.text.toString()!=null&&localityAutoCompleteTextView.text.toString()!=null&&pinCodeID.text.toString()!=null&&cityAdresEtShel.text.toString()!=null&&selectedmaterial!=null ){
+        DealerResisterbtn.setOnClickListener {
+            if (vehicle.text.toString() != null && localityAutoCompleteTextView.text.toString() != null && pinCodeID.text.toString() != null && cityAdresEtShel.text.toString() != null && selectedmaterial != null) {
                 uploadImagrToFirebase()
-           }
-       }
+            }
+        }
         materialRadioBtn.setOnCheckedChangeListener { compoundButton, b ->
-            when(b){
-                R.id.ChipsRadioButton ->{selectedmaterial="Chips"
+            when (b) {
+                R.id.ChipsRadioButton -> {
+                    selectedmaterial = "Chips"
 
                 }
-                R.id.RawMaterialRadioButton ->{
-                    selectedmaterial="Rawmaterial"
+                R.id.RawMaterialRadioButton -> {
+                    selectedmaterial = "Rawmaterial"
                 }
-                R.id.humanRadioButton ->{
-                    selectedmaterial="Human"
+                R.id.humanRadioButton -> {
+                    selectedmaterial = "Human"
                 }
 
             }
         }
 
     }
-     fun PickImage(code: Int){
-         Log.d("Main", "Try to show photo selecter")
-         getContext()?.let {
-             CropImage.activity()
-                 .start(it, this)
-         };
-         pikedImageCode=code
-     }
+
+    fun PickImage(code: Int) {
+        Log.d("Main", "Try to show photo selecter")
+        getContext()?.let {
+            CropImage.activity()
+                .start(it, this)
+        };
+        pikedImageCode = code
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         Log.d("Main", "overrde activity result strat")
-        if (requestCode==CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             //proceed and check what thee image is selected
             Log.d("Main", "image is selected")
 
             val result = CropImage.getActivityResult(data)
-            if (resultCode==RESULT_OK){
+            if (resultCode == RESULT_OK) {
 
                 when (pikedImageCode) {
                     1 -> {
@@ -201,26 +205,24 @@ class ShellFragment : Fragment() {
                     }
 
                 }
-            }
-            else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
                 Log.d("Main", "$error")
             }
 
-        }
-        else
-        {
+        } else {
             Log.d("Main", "conditioon false")
         }
     }
-/*
-for permission override
-*/
+
+    /*
+    for permission override
+    */
     override fun onRequestPermissionsResult(
-    requestCode: Int,
-    permissions: Array<out String>,
-    grantResults: IntArray,
-) {
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray,
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             Registration.PermissionCode -> {
@@ -240,11 +242,11 @@ for permission override
 
 
     private fun uploadImagrToFirebase() {
-       val sharePrefUsersData= SharePrefUsersData(activity!!)
-        val usersData=sharePrefUsersData.getUserDataPref()
-        val userPicUri=Uri.parse(usersData.image)
+        val sharePrefUsersData = SharePrefUsersData(activity!!)
+        val usersData = sharePrefUsersData.getUserDataPref()
+        val userPicUri = Uri.parse(usersData.image)
         imagesUriList!!.add(userPicUri)
-        for (uri in imagesUriList!!){
+        for (uri in imagesUriList!!) {
             val filename = UUID.randomUUID().toString()
             val ref = FirebaseStorage.getInstance().getReference("/DealersImages/$filename")
             Log.d("Images UrI", "$uri")
@@ -263,7 +265,7 @@ for permission override
                     }
                 }
             }
-                .addOnFailureListener{
+                .addOnFailureListener {
                     Log.d("Images url", "${it}+ failed to upload")
                 }
 
@@ -273,39 +275,39 @@ for permission override
     }
 
     private fun saveDealersDataFb(usersData: UserData) {
-        val uid=FirebaseAuth.getInstance().uid?:""
-        val picPath1:String=imagesUrlList!!.get(0)
-        val picPath2:String=imagesUrlList!!.get(1)
-        val picPath3:String=imagesUrlList!!.get(2)
-        val userPic:String=imagesUrlList!!.get(3)
-        Log.d("Images url"," ${imagesUrlList!!.get(0)}")
-        Log.d("Images url"," ${imagesUrlList!!.get(1)}")
-        Log.d("Images url"," ${imagesUrlList!!.get(2)}+ $picPath1")
-       val dealersDataModel= DealersDataModel(
-           usersData.userNmae,
-           usersData.PhoneNo,
-           usersData.email,
-           userPic,
-           vehicle.text.toString(),
-           selectedmaterial!!,
-           localityAutoCompleteTextView.text.toString(),
-           pinShell.text.toString(),
-           cityAdresEtShel.text.toString(),
-           uid,picPath1,
-           picPath2,
-           picPath3
-       )
-        val ref= FirebaseDatabase.getInstance().getReference("/DealersData/$uid")
+        val uid = FirebaseAuth.getInstance().uid ?: ""
+        val picPath1: String = imagesUrlList!!.get(0)
+        val picPath2: String = imagesUrlList!!.get(1)
+        val picPath3: String = imagesUrlList!!.get(2)
+        val userPic: String = imagesUrlList!!.get(3)
+        Log.d("Images url", " ${imagesUrlList!!.get(0)}")
+        Log.d("Images url", " ${imagesUrlList!!.get(1)}")
+        Log.d("Images url", " ${imagesUrlList!!.get(2)}+ $picPath1")
+        val dealersDataModel = DealersDataModel(
+            usersData.userNmae,
+            usersData.PhoneNo,
+            usersData.email,
+            userPic,
+            vehicle.text.toString(),
+            selectedmaterial!!,
+            localityAutoCompleteTextView.text.toString(),
+            pinShell.text.toString(),
+            cityAdresEtShel.text.toString(),
+            uid, picPath1,
+            picPath2,
+            picPath3
+        )
+        val ref = FirebaseDatabase.getInstance().getReference("/DealersData/$uid")
 
         ref.setValue(dealersDataModel)
             .addOnSuccessListener {
-                Log.d("Images url","user detail is uploaded")
-              Toast.makeText(context,"Dealers data saved succesfully",Toast.LENGTH_SHORT).show()
+                Log.d("Images url", "user detail is uploaded")
+                Toast.makeText(context, "Dealers data saved succesfully", Toast.LENGTH_SHORT).show()
             }
 
             .addOnFailureListener {
-                Log.d("Images url","details re not uploaded :try again")
-                Toast.makeText(context,"dealers details not uploaded",Toast.LENGTH_SHORT).show()
+                Log.d("Images url", "details re not uploaded :try again")
+                Toast.makeText(context, "dealers details not uploaded", Toast.LENGTH_SHORT).show()
 
             }
     }

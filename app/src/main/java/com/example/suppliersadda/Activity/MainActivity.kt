@@ -72,6 +72,11 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
 
+                R.id.nav_sell -> {
+                    val intent = Intent(this,SellActivity::class.java)
+                    startActivity(intent)
+                }
+
                 R.id.navigation_settings -> Toast.makeText(applicationContext,
                     "clicked Settings", Toast.LENGTH_SHORT).show()
 
