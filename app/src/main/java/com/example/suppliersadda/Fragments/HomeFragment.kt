@@ -42,7 +42,8 @@ private const val ARG_PARAM2 = "param2"
 class HomeFragment : Fragment() {
      val addImageArr= arrayOf<Int>(
          R.drawable.ic_action_home,
-        // R.drawable.caradd,
+       //R.drawable.caraddpic,
+
 
          R.drawable.irhastamp
 
