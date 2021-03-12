@@ -5,12 +5,10 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewStub
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.isVisible
+import androidx.core.widget.NestedScrollView
 import com.example.suppliersadda.R
 import com.example.suppliersadda.utils.ViewAnimation
 import kotlinx.android.synthetic.main.activity_sell.*
@@ -21,6 +19,12 @@ class SellActivity : AppCompatActivity() {
     private var current_step = 1
     private var status: TextView? = null
     private var stubs:ViewStub? = null
+
+    //Defining Expand variables
+    private val nested_scroll_view: NestedScrollView? = null
+    private var bt_toggle_text: ImageButton? = null
+    private var bt_hide_text: Button? = null
+    private var lyt_expand_text: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +55,15 @@ class SellActivity : AppCompatActivity() {
 //        stubs!!.layoutResource = R.layout.sell_step1
 //        stubs!!.inflate()
 
+
+        // text section
+        bt_toggle_text = findViewById<View>(R.id.bt_toggle_text) as ImageButton
+        bt_hide_text = findViewById<View>(R.id.bt_hide_text) as Button
+        lyt_expand_text = findViewById<View>(R.id.lyt_expand_text)
+        lyt_expand_text!!.visibility = View.GONE
+        bt_toggle_text!!.setOnClickListener(View.OnClickListener { toggleSectionText(bt_toggle_text!!) })
+        bt_hide_text!!.setOnClickListener(View.OnClickListener { toggleSectionText(bt_toggle_text!!) })
+
         //Trying old way of including xml's
         var step1 = findViewById<View>(R.id.step1__)
         var step2 = findViewById<View>(R.id.step2__)
@@ -72,7 +85,7 @@ class SellActivity : AppCompatActivity() {
         }
         val str_progress = String.format(
             getString(R.string.step_of),
-            current_step,MAX_STEP
+            current_step, MAX_STEP
         )
         status!!.setText(str_progress)
         bottomProgressDots(current_step)
@@ -183,6 +196,35 @@ class SellActivity : AppCompatActivity() {
 
 
 
+    }
+
+    private fun toggleSectionText(view: View) {
+        val show: Boolean = toggleArrow(view)
+        if (show) {
+            ViewAnimation.expand(
+                lyt_expand_text
+            ) {
+                if (nested_scroll_view != null) {
+                    lyt_expand_text?.let { nestedScrollTo(nested_scroll_view, it) }
+                }
+            }
+        } else {
+            ViewAnimation.collapse(lyt_expand_text)
+        }
+    }
+
+    fun nestedScrollTo(nested: NestedScrollView, targetView: View) {
+        nested.post { nested.scrollTo(500, targetView.bottom) }
+    }
+
+    fun toggleArrow(view: View): Boolean {
+        return if (view.rotation == 0f) {
+            view.animate().setDuration(200).rotation(180f)
+            true
+        } else {
+            view.animate().setDuration(200).rotation(0f)
+            false
+        }
     }
 
 }
