@@ -39,6 +39,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:19.2.0'
     implementation 'com.google.firebase:firebase-database-ktx:19.4.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
@@ -56,4 +57,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.0-alpha04'
     // for slider
     implementation 'com.synnapps:carouselview:0.1.5'
+
+    // google gson --------------------------------------------------------------------------------
+    implementation 'com.google.code.gson:gson:2.8.5'
+
 }
